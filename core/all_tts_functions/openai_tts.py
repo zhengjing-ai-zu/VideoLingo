@@ -5,6 +5,10 @@ import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from core.config_utils import load_key
 
+"""
+OpenAI 提供的 TTS 方案。
+"""
+
 BASE_URL = "https://api.302.ai/v1/audio/speech"
 VOICE_LIST = ["alloy", "echo", "fable", "onyx", "nova", "shimmer"]
 # voice options: alloy, echo, fable, onyx, nova, and shimmer

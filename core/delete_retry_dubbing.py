@@ -2,6 +2,10 @@ import os, sys
 import shutil
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+"""
+删除失败的配音任务并重试。
+"""
+
 def delete_dubbing_files():
     files_to_delete = [
         os.path.join("output", "dub.wav"),

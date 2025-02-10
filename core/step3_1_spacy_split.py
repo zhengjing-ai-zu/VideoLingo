@@ -8,6 +8,10 @@ from spacy_utils.split_by_mark import split_by_mark
 from spacy_utils.split_long_by_root import split_long_by_root_main
 from spacy_utils.load_nlp_model import init_nlp
 
+"""
+使用 SpaCy 按语法结构拆分字幕。
+"""
+
 def split_by_spacy():
     if os.path.exists('output/log/sentence_splitbynlp.txt'):
         print("File 'sentence_splitbynlp.txt' already exists. Skipping split_by_spacy.")

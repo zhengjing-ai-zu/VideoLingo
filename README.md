@@ -153,3 +153,57 @@ This project is licensed under the Apache 2.0 License. Special thanks to the fol
 ---
 
 <p align="center">If you find VideoLingo helpful, please give me a ⭐️!</p>
+
+## 项目理解（个人）
+
+VideoLingo 是一个开源项目，旨在提供 Netflix 级别的视频字幕处理功能，包括字幕切割、翻译、对齐，甚至配音，实现一键全自动化处理。
+
+### 项目结构：
+
+- .streamlit/：Streamlit 配置文件。
+- batch/：包含批处理脚本，用于处理批量视频文件。
+- core/：核心功能模块，负责视频处理的主要逻辑。（目录是该项目的核心逻辑部分，包含多个子模块，主要涉及 文本转语音（TTS）、语音识别（Whisper）、文本处理（SpaCy） 以及完整的 视频翻译和合成流程。）
+    * 下载视频 ➝ step1_ytdlp.py
+    * 语音识别 ➝ step2_whisperX.py
+    * 字幕优化 ➝ step3 & step4
+    * 字幕时间轴调整 ➝ step5 & step6
+    * 字幕合成 ➝ step7
+    * 生成配音 ➝ step8 & step9
+    * 合成最终视频 ➝ step10 ~ step12
+    * 该项目支持 多种 TTS 方案、语音识别（WhisperX），并结合 GPT 进行优化，是一个完整的 视频翻译+配音自动化解决方案。
+- docs/：项目的文档文件，提供使用说明和开发者指南。
+- st_components/：Streamlit 组件，用于构建项目的前端界面。
+- translations/：翻译相关的资源文件。
+- Dockerfile：用于构建项目的 Docker 镜像，方便部署。
+- OneKeyStart.bat：Windows 下的一键启动脚本。
+- VideoLingo_colab.ipynb：Google Colab 的 Jupyter Notebook，方便在云端运行项目。
+- config.yaml：项目的配置文件。（该文件包含应用程序的配置参数，如默认语言设置、翻译 API 密钥、音频处理参数等。开发者可以根据需要修改该文件，以适应不同的应用场景。）
+- custom_terms.xlsx：自定义术语表，用于翻译时的术语管理。
+- install.py：安装脚本，帮助用户快速配置环境。（这是一个安装脚本，用于帮助用户快速配置运行环境。它会检查系统的依赖项，安装所需的 Python 包，并进行必要的初始化操作。）
+- requirements.txt：Python 依赖包列表。
+- st.py：Streamlit 应用的主脚本，启动前端界面。（项目的主入口，使用 Streamlit 构建前端界面。该脚本负责加载配置文件（config.yaml），初始化应用程序，并定义用户交互界面。用户可以通过该界面上传视频文件，选择翻译语言，设置配音选项等。在用户提交任务后，st.py 会调用核心处理模块，执行视频的字幕提取、翻译、对齐和配音等操作。）
+
+### 主要功能：
+
+- 字幕切割：自动检测视频中的语音段落，并将其切割成独立的字幕片段。
+- 字幕翻译：利用 AI 模型，将原始字幕翻译成目标语言。
+- 字幕对齐：确保翻译后的字幕与视频中的语音同步。
+- 自动配音：为翻译后的字幕生成对应的语音，并与视频合成，实现全自动配音。
+
+### 使用方法：
+
+用户可以通过运行 OneKeyStart.bat 脚本在 Windows 系统上一键启动应用，或使用 st.py 脚本启动 Streamlit 应用。在启动应用后，用户可以上传视频文件，配置翻译和配音选项，系统将自动处理并生成带有翻译字幕和配音的视频。
+
+1. 环境配置：运行 install.py 脚本，或手动安装 requirements.txt 中列出的依赖项。
+2. 配置文件：根据需要，修改 config.yaml 中的参数设置。
+3. 启动应用：在命令行中运行 python st.py，启动 Streamlit 应用。
+4. 上传视频：通过前端界面上传需要处理的视频文件，设置翻译和配音选项。
+5. 处理结果：应用程序将自动处理视频，并生成带有翻译字幕和配音的输出视频。
+
+### 技术栈：
+
+Python：主要的编程语言。
+Streamlit：用于构建前端界面。
+Docker：用于容器化部署。
+AI 模型：用于语音识别、翻译和语音合成。
+项目的设计目标是简化视频翻译和本地化的流程，使用户能够高效地处理多语言视频内容。

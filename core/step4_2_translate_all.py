@@ -13,6 +13,10 @@ from rich.panel import Panel
 from rich.progress import Progress, SpinnerColumn, TextColumn
 from difflib import SequenceMatcher
 
+"""
+翻译所有字幕。
+"""
+
 console = Console()
 
 SENTENCE_SPLIT_FILE = "output/log/sentence_splitbymeaning.txt"

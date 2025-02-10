@@ -5,6 +5,17 @@ from rich import print
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from core.config_utils import update_key
 
+
+"""
+核心功能：
+    ffmpeg 处理音频（压缩、转码、检测静音）。
+    计算音频时长，自动 按静音点切割。
+    处理 Whisper 转录结果，清理长单词、符号。
+
+主要用于自动化音频处理和语音识别，适合长音频的拆分和转录。
+"""
+
+
 AUDIO_DIR = "output/audio"
 RAW_AUDIO_FILE = "output/audio/raw.mp3"
 CLEANED_CHUNKS_EXCEL_PATH = "output/log/cleaned_chunks.xlsx"
@@ -23,6 +34,7 @@ def compress_audio(input_file: str, output_file: str):
     return output_file
 
 def convert_video_to_audio(video_file: str):
+    """提取视频中的音频，并保存为 raw.mp3"""
     os.makedirs(AUDIO_DIR, exist_ok=True)
     if not os.path.exists(RAW_AUDIO_FILE):
         print(f"🎬➡️🎵 Converting to high quality audio with FFmpeg ......")
@@ -36,7 +48,7 @@ def convert_video_to_audio(video_file: str):
         print(f"🎬➡️🎵 Converted <{video_file}> to <{RAW_AUDIO_FILE}> with FFmpeg\n")
 
 def _detect_silence(audio_file: str, start: float, end: float) -> List[float]:
-    """Detect silence points in the given audio segment"""
+    """检测音频中的静音点(Detect silence points in the given audio segment)"""
     cmd = ['ffmpeg', '-y', '-i', audio_file, 
            '-ss', str(start), '-to', str(end),
            '-af', 'silencedetect=n=-30dB:d=0.5', 
@@ -67,6 +79,7 @@ def get_audio_duration(audio_file: str) -> float:
 
 def split_audio(audio_file: str, target_len: int = 30*60, win: int = 60) -> List[Tuple[float, float]]:
     # 30 min 16000 Hz 96kbps ~ 22MB < 25MB required by whisper
+    # 将音频切割为多个小片段
     print("[bold blue]🔪 Starting audio segmentation...[/]")
     
     duration = get_audio_duration(audio_file)

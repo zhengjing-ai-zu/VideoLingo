@@ -8,6 +8,10 @@ from rich.table import Table
 from rich import box
 from core.config_utils import load_key
 
+"""
+translate_once.py：一次性翻译整个视频（可能用于快速处理模式）。
+"""
+
 console = Console()
 
 def valid_translate_result(result: dict, required_keys: list, required_sub_keys: list):

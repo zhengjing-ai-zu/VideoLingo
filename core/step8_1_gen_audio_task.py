@@ -11,6 +11,14 @@ from rich.console import Console
 from core.config_utils import load_key  
 from core.all_tts_functions.estimate_duration import init_estimator, estimate_duration
 
+"""
+音频生成
+
+step8_1_gen_audio_task.py：生成音频任务（选择 TTS 方案）。
+step8_2_gen_dub_chunks.py：按字幕块生成配音音频。
+step9_extract_refer_audio.py：提取参考音频（可能用于声音克隆）。
+"""
+
 console = Console()
 speed_factor = load_key("speed_factor")
 

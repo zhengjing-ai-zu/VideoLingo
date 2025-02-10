@@ -4,6 +4,9 @@ import os, sys
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 from core.config_utils import load_key
 
+"""
+Microsoft Edge 在线 TTS。
+"""
 # Available voices can be listed using edge-tts --list-voices command
 # Common English voices:
 # en-US-JennyNeural - Female

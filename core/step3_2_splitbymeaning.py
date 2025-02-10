@@ -10,6 +10,10 @@ from core.config_utils import load_key, get_joiner
 from rich.console import Console
 from rich.table import Table
 
+"""
+按语义进一步拆分字幕。
+"""
+
 console = Console()
 
 def tokenize_sentence(sentence, nlp):

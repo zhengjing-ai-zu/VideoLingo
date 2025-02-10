@@ -5,6 +5,10 @@ from rich import print
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from core.config_utils import load_key
 
+"""
+加载 NLP（自然语言处理）模型。
+"""
+
 SPACY_MODEL_MAP = load_key("spacy_model_map")
 
 def get_spacy_model(language: str):

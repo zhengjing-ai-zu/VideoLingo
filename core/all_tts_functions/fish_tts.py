@@ -5,7 +5,10 @@ from core.config_utils import load_key
 import json
 
 def fish_tts(text: str, save_as: str) -> bool:
-    """302.ai Fish TTS conversion"""
+    """
+    Fish TTS 语音合成。
+    302.ai Fish TTS conversion
+    """
     API_KEY = load_key("fish_tts.api_key")
     character = load_key("fish_tts.character")
     refer_id = load_key("fish_tts.character_id_dict")[character]

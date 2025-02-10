@@ -7,6 +7,15 @@ from core.spacy_utils.load_nlp_model import init_nlp
 from core.config_utils import load_key, get_joiner
 from rich import print
 
+"""
+利用 NLP 处理文本，按标点符号（句号、逗号等）拆分句子，并存储结果：
+    支持多种语言（自动检测或手动设置）。
+    清理 Excel 数据（去除双引号和空格）。
+    使用 NLP 模型分句（确保句子边界）。
+    处理标点符号合并问题（适用于中文、日文）。
+    输出至文件，并在终端给出提示。
+"""
+
 def split_by_mark(nlp):
     whisper_language = load_key("whisper.language")
     language = load_key("whisper.detected_language") if whisper_language == 'auto' else whisper_language # consider force english case

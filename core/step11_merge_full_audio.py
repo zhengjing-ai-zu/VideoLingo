@@ -6,6 +6,15 @@ from pydub import AudioSegment
 from rich import print as rprint
 from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, TaskProgressColumn
 from rich.console import Console
+
+"""
+音频合成
+
+step10_gen_audio.py：生成完整配音音频。
+step11_merge_full_audio.py：合并所有配音音频。
+step12_merge_dub_to_vid.py：将配音合成到视频。
+"""
+
 console = Console()
 
 INPUT_EXCEL = 'output/audio/tts_tasks.xlsx'

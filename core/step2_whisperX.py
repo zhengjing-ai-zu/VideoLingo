@@ -9,6 +9,10 @@ from core.all_whisper_methods.demucs_vl import demucs_main, RAW_AUDIO_FILE, VOCA
 from core.all_whisper_methods.audio_preprocess import process_transcription, convert_video_to_audio, split_audio, save_results, compress_audio, CLEANED_CHUNKS_EXCEL_PATH
 from core.step1_ytdlp import find_video_files
 
+"""
+使用 WhisperX 进行语音识别。
+"""
+
 WHISPER_FILE = "output/audio/for_whisper.mp3"
 ENHANCED_VOCAL_PATH = "output/audio/enhanced_vocals.mp3"
 

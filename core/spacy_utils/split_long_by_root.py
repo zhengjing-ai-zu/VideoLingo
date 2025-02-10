@@ -7,6 +7,10 @@ from core.config_utils import load_key, get_joiner
 from rich import print
 import string
 
+"""
+按句子主干（Root）拆分长句。
+"""
+
 def split_long_sentence(doc):
     tokens = [token.text for token in doc]
     n = len(tokens)

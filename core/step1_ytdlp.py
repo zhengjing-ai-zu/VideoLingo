@@ -5,6 +5,10 @@ import re
 import subprocess
 from core.config_utils import load_key
 
+"""
+使用 yt-dlp 下载视频
+"""
+
 def sanitize_filename(filename):
     # Remove or replace illegal characters
     filename = re.sub(r'[<>:"/\\|?*]', '', filename)

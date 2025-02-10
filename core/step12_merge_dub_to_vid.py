@@ -13,6 +13,14 @@ from core.step7_merge_sub_to_vid import check_gpu_available
 from core.config_utils import load_key
 from core.step1_ytdlp import find_video_files
 
+"""
+音频合成
+
+step10_gen_audio.py：生成完整配音音频。
+step11_merge_full_audio.py：合并所有配音音频。
+step12_merge_dub_to_vid.py：将配音合成到视频。
+"""
+
 DUB_VIDEO = "output/output_dub.mp4"
 DUB_SUB_FILE = 'output/dub.srt'
 DUB_AUDIO = 'output/dub.mp3'

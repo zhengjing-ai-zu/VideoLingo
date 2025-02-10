@@ -5,6 +5,11 @@ from core.prompts_storage import get_summary_prompt
 from core.config_utils import load_key
 import pandas as pd
 
+
+"""
+字幕摘要（可能用于减少文字量）。
+"""
+
 TERMINOLOGY_JSON_PATH = 'output/log/terminology.json'
 SENTENCE_TXT_PATH = 'output/log/sentence_splitbymeaning.txt'
 CUSTOM_TERMS_PATH = 'custom_terms.xlsx'

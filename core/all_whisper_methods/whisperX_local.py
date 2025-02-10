@@ -14,10 +14,14 @@ import tempfile
 from core.config_utils import load_key
 from core.all_whisper_methods.audio_preprocess import save_language
 
+"""
+WhisperX 的本地部署版本。
+"""
+
 MODEL_DIR = load_key("model_dir")
 
 def check_hf_mirror() -> str:
-    """Check and return the fastest HF mirror"""
+    """选择最快的 Hugging Face 镜像（Check and return the fastest HF mirror)"""
     mirrors = {
         'Official': 'huggingface.co',
         'Mirror': 'hf-mirror.com'
@@ -52,6 +56,7 @@ def transcribe_audio(audio_file: str, start: float, end: float) -> Dict:
     device = "cuda" if torch.cuda.is_available() else "cpu"
     rprint(f"🚀 Starting WhisperX using device: {device} ...")
     
+    # 根据 GPU 选择计算参数
     if device == "cuda":
         gpu_mem = torch.cuda.get_device_properties(0).total_memory / (1024**3)
         batch_size = 16 if gpu_mem > 8 else 2
@@ -64,6 +69,7 @@ def transcribe_audio(audio_file: str, start: float, end: float) -> Dict:
     rprint(f"[green]▶️ Starting WhisperX for segment {start:.2f}s to {end:.2f}s...[/green]")
     
     try:
+        #  加载 Whisper 语音识别模型
         if WHISPER_LANGUAGE == 'zh':
             model_name = "Huan69/Belle-whisper-large-v3-zh-punct-fasterwhisper"
             local_model = os.path.join(MODEL_DIR, "Belle-whisper-large-v3-zh-punct-fasterwhisper")
@@ -100,6 +106,7 @@ def transcribe_audio(audio_file: str, start: float, end: float) -> Dict:
                 os.unlink(temp_audio_path)
 
         rprint("[bold green]note: You will see Progress if working correctly[/bold green]")
+        # 运行 WhisperX 进行转录
         result = model.transcribe(audio_segment, batch_size=batch_size, print_progress=True)
 
         # Free GPU resources
@@ -111,7 +118,7 @@ def transcribe_audio(audio_file: str, start: float, end: float) -> Dict:
         if result['language'] == 'zh' and WHISPER_LANGUAGE != 'zh':
             raise ValueError("Please specify the transcription language as zh and try again!")
 
-        # Align whisper output
+        # Align whisper output 使用对齐模型，优化文本时间戳。
         model_a, metadata = whisperx.load_align_model(language_code=result["language"], device=device)
         result = whisperx.align(result["segments"], model_a, metadata, audio_segment, device, return_char_alignments=False)
 

@@ -8,6 +8,10 @@ import json
 import tempfile
 import subprocess
 
+"""
+WhisperX 是 Whisper 的加速版，提供更快的识别和对齐能力。
+"""
+
 OUTPUT_LOG_DIR = "output/log"
 def transcribe_audio_302(audio_path: str, start: float = None, end: float = None):
     os.makedirs(OUTPUT_LOG_DIR, exist_ok=True)

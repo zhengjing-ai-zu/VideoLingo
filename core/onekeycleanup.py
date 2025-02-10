@@ -4,6 +4,10 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from core.step1_ytdlp import find_video_files
 import shutil
 
+"""
+一键清理缓存或临时文件。
+"""
+
 def cleanup(history_dir="history"):
     # Get video file name
     video_file = find_video_files()

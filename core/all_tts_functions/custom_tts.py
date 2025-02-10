@@ -2,6 +2,7 @@ from pathlib import Path
 
 def custom_tts(text, save_path):
     """
+    自定义 TTS 方案。
     Custom TTS (Text-to-Speech) interface
     
     Args:

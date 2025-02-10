@@ -5,6 +5,18 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from load_nlp_model import init_nlp
 from rich import print
 
+"""
+主要目标：基于 NLP 模型，对文本进行更合理的句子拆分，提升 NLP 任务的准确性。
+核心思路：
+    先按逗号拆分句子。
+    再基于连接词进行更细粒度拆分。
+适用场景：
+    机器翻译
+    文本摘要
+    信息抽取
+    对话系统
+"""
+
 def analyze_connectors(doc, token):
     """
     Analyze whether a token is a connector that should trigger a sentence split.

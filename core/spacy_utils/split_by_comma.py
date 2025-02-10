@@ -6,6 +6,18 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from load_nlp_model import init_nlp
 from rich import print
 
+"""
+基于逗号和冒号拆分文本，并保存拆分后的结果。它使用 NLP（自然语言处理）模型来确保拆分的合理性，避免在不合适的位置切割句子。
+主要逻辑：
+    确保右侧短语是完整子句
+    排除标点和过短的短语
+    使用 NLP 判断句法结构
+适用场景：
+    自动化文本处理
+    语音转录后句子优化
+    机器翻译中的断句
+"""
+
 def is_valid_phrase(phrase):
     # 🔍 Check for subject and verb
     has_subject = any(token.dep_ in ["nsubj", "nsubjpass"] or token.pos_ == "PRON" for token in phrase)

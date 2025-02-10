@@ -8,6 +8,10 @@ import time
 from requests.exceptions import RequestException
 from core.config_utils import load_key
 
+"""
+调用 GPT 模型，可能用于字幕优化或翻译辅助。
+"""
+
 LOG_FOLDER = 'output/gpt_log'
 LOCK = Lock()
 

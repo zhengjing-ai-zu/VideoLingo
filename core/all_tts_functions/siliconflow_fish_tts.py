@@ -15,6 +15,18 @@ import time
 from rich.panel import Panel
 from rich.text import Text
 
+"""
+主要功能是调用 SiliconFlow Fish TTS API，将文本转换为语音，并支持三种模式：
+    Preset（预设模式）：使用默认的 fishaudio/fish-speech-1.4 语音模型。
+    Custom（自定义模式）：通过上传参考音频，创建自定义声音，并使用它进行文本合成。
+    Dynamic（动态模式）：使用参考音频和文本进行即时语音合成，而不创建新的自定义声音。
+支持音频合并
+支持 VideoLingo 场景
+使用 requests 发送 API 请求
+使用 pydub 处理音频
+通过 rich 打印美观的日志
+"""
+
 API_URL_SPEECH = "https://api.siliconflow.cn/v1/audio/speech"
 API_URL_VOICE = "https://api.siliconflow.cn/v1/uploads/audio/voice"
 
@@ -26,6 +38,8 @@ def _get_headers():
     return {"Authorization": f'Bearer {load_key("sf_fish_tts.api_key")}', "Content-Type": "application/json"}
 
 def siliconflow_fish_tts(text, save_path, mode="preset", voice_id=None, ref_audio=None, ref_text=None, check_duration=False):
+    """向 SiliconFlow Fish TTS API 发送请求，将 text 转换为 .wav 音频，并保存到 save_path。"""
+    
     sf_fish_set, headers = load_key("sf_fish_tts"), _get_headers()
     payload = {"model": MODEL_NAME, "response_format": "wav", "stream": False, "input": text}
     
@@ -82,6 +96,12 @@ def siliconflow_fish_tts(text, save_path, mode="preset", voice_id=None, ref_audi
     return False
 
 def create_custom_voice(audio_path, text, custom_name=None):
+    """
+    该函数用于 创建自定义语音，即：
+        上传一段音频
+        配套文本
+        获取一个 voice_id，用于后续 TTS 请求
+    """
     if not Path(audio_path).exists():
         raise FileNotFoundError(f"Audio file not found at {audio_path}")
     
@@ -120,7 +140,10 @@ def create_custom_voice(audio_path, text, custom_name=None):
     raise ValueError(f"Failed to create custom voice 🚫 HTTP {response.status_code}, Error details: {response_json}")
 
 def merge_audio(files: List[str], output: str) -> bool:
-    """Merge audio files, add a brief silence"""
+    """
+    Merge audio files, add a brief silence
+    用途：将多个 .wav 文件合并，之间加入 100ms 的静音。
+    """
     try:
         # Create an empty audio segment
         combined = AudioSegment.empty()
@@ -150,7 +173,10 @@ def merge_audio(files: List[str], output: str) -> bool:
         return False
 
 def get_ref_audio(task_df) -> Tuple[str, str]:
-    """Get reference audio and text, ensuring the combined text length does not exceed 100 characters"""
+    """
+    Get reference audio and text, ensuring the combined text length does not exceed 100 characters
+    从 task_df 选择一段音频，并确保文本长度 不超过 90 个字符，用于 动态模式 语音合成。
+    """
     rprint(f"[blue]🎯 Starting reference audio selection process...")
     
     duration = 0

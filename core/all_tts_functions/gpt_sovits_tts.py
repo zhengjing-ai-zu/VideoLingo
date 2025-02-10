@@ -9,6 +9,10 @@ import requests
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
 from core.config_utils import load_key
 
+"""
+结合 GPT 和 SoVITS（声音克隆）生成 TTS。
+"""
+
 def check_lang(text_lang, prompt_lang):
     # only support zh and en
     if any(lang in text_lang.lower() for lang in ['zh', 'cn', '中文', 'chinese']):
@@ -28,6 +32,17 @@ def check_lang(text_lang, prompt_lang):
 
 
 def gpt_sovits_tts(text, text_lang, save_path, ref_audio_path, prompt_lang, prompt_text):
+    """
+    TTS处理
+        先调用 check_lang 确保语言参数正确。
+        payload：构造 TTS 服务器请求参数。
+            text：要转换的文本。
+            text_lang：文本语言（zh/en）。
+            ref_audio_path：参考音频路径。
+            prompt_lang：提示语言。
+            prompt_text：提示文本。
+            speed_factor：语速（默认 1.0）。
+    """
     text_lang, prompt_lang = check_lang(text_lang, prompt_lang)
 
     current_dir = Path.cwd()
@@ -57,6 +72,15 @@ def gpt_sovits_tts(text, text_lang, save_path, ref_audio_path, prompt_lang, prom
         return False
 
 def gpt_sovits_tts_for_videolingo(text, save_as, number, task_df):
+    """
+    启动 TTS 服务器 (start_gpt_sovits_server)。
+    加载配置：
+        target_language：目标语言。
+        whisper.language：Whisper 语音识别语言。
+        gpt_sovits 相关参数：
+        character：配音角色。
+        refer_mode：参考模式（1/2/3）。
+    """
     start_gpt_sovits_server()
     TARGET_LANGUAGE = load_key("target_language")
     WHISPER_LANGUAGE = load_key("whisper.language")
@@ -69,6 +93,10 @@ def gpt_sovits_tts_for_videolingo(text, save_as, number, task_df):
     prompt_text = task_df.loc[task_df['number'] == number, 'origin'].values[0]
 
     if REFER_MODE == 1:
+        """
+        查找默认参考音频。
+        find_and_check_config_path 确保 GPT-SoVITS 目录正确。
+        """
         # Use the default reference audio from config
         _, config_path = find_and_check_config_path(DUBBING_CHARACTER)
         config_dir = config_path.parent

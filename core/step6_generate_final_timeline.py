@@ -6,6 +6,12 @@ from rich.panel import Panel
 from rich.console import Console
 import autocorrect_py as autocorrect
 
+"""
+字幕时间轴优化
+    step5_splitforsub.py：拆分字幕以适配目标语言的语速。
+    step6_generate_final_timeline.py：生成最终字幕时间轴。
+"""
+
 console = Console()
 
 CLEANED_CHUNKS_FILE = 'output/log/cleaned_chunks.xlsx'

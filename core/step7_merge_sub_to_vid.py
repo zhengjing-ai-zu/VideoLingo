@@ -7,6 +7,12 @@ import cv2
 import numpy as np
 import platform
 
+"""
+字幕合成
+
+step7_merge_sub_to_vid.py：将字幕合并到视频。
+"""
+
 SRC_FONT_SIZE = 15
 TRANS_FONT_SIZE = 17
 FONT_NAME = 'Arial'
